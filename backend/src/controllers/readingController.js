@@ -188,4 +188,27 @@ const getAlerts = async (req, res) => {
   }
 };
 
-module.exports = { postReading, getReadings, getLatestReadings, getStats, getAlerts };
+// @desc  Public summary stats for landing page (no auth)
+// @route GET /api/readings/public-stats
+const getPublicStats = async (req, res) => {
+  try {
+    const Device = require('../models/Device');
+    const total  = await Device.countDocuments({ isActive: true });
+
+    // Devices that have a reading in the last 10 minutes
+    const tenMinsAgo = new Date(Date.now() - 10 * 60 * 1000);
+    const recentReadings = await Reading.aggregate([
+      { $match: { timestamp: { $gte: tenMinsAgo } } },
+      { $group: { _id: '$device' } },
+    ]);
+    const online  = recentReadings.length;
+    const warning = await Reading.countDocuments({ alert: true, timestamp: { $gte: tenMinsAgo } });
+    const offline = Math.max(0, total - online);
+
+    res.json({ success: true, data: { total, online, warning, offline } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+module.exports = { postReading, getReadings, getLatestReadings, getStats, getAlerts, getPublicStats };

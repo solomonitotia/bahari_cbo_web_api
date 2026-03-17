@@ -33,7 +33,7 @@ export default function Register() {
       <div className="relative w-full max-w-sm">
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-2 text-white">
-            <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-xl shadow-lg">🌊</div>
+            <div className="w-10 h-10 bg-ocean-600 rounded-xl flex items-center justify-center text-xl shadow-lg">🌊</div>
             <div className="text-left">
               <p className="font-bold text-base leading-tight">Bahari CBO</p>
               <p className="text-slate-400 text-xs">Temperature Monitoring</p>
@@ -42,7 +42,7 @@ export default function Register() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-          <div className="bg-primary-600 px-6 py-5">
+          <div className="bg-ocean-600 px-6 py-5">
             <h2 className="text-white font-bold text-lg">Create Account</h2>
             <p className="text-primary-100 text-sm mt-0.5">Join the Bahari CBO community</p>
           </div>
@@ -99,7 +99,7 @@ export default function Register() {
 
             <p className="text-center text-sm text-gray-500">
               Already have an account?{' '}
-              <Link to="/login" className="text-primary-600 font-semibold hover:underline">Sign in</Link>
+              <Link to="/login" className="text-ocean-600 font-semibold hover:underline">Sign in</Link>
             </p>
           </div>
         </div>

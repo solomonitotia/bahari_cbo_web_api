@@ -4,7 +4,7 @@ const { body } = require('express-validator');
 const { protect, deviceAuth, requireVerified, attachGroupFilter } = require('../middleware/auth');
 const validate = require('../middleware/validate');
 const {
-  postReading, getReadings, getLatestReadings, getStats, getAlerts,
+  postReading, getReadings, getLatestReadings, getStats, getAlerts, getPublicStats,
 } = require('../controllers/readingController');
 
 /**
@@ -97,6 +97,9 @@ router
  *       200:
  *         description: Latest readings per device
  */
+// Public endpoint — no auth required (used on landing page)
+router.get('/public-stats', getPublicStats);
+
 router.get('/latest', protect, requireVerified, attachGroupFilter, getLatestReadings);
 
 /**

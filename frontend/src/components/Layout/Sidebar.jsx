@@ -34,7 +34,7 @@ export default function Sidebar({ onClose }) {
   const linkClass = (isActive) =>
     `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer select-none
      ${isActive
-       ? 'bg-primary-600 text-white shadow-sm'
+       ? 'bg-ocean-600 text-white shadow-sm'
        : 'text-slate-400 hover:bg-slate-800 hover:text-white'
      } ${collapsed ? 'justify-center' : ''}`;
 
@@ -45,7 +45,7 @@ export default function Sidebar({ onClose }) {
       <div className={`flex items-center border-b border-slate-800 h-16 px-4 ${collapsed ? 'justify-center' : 'justify-between'}`}>
         {!collapsed && (
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-base shadow flex-shrink-0">🌊</div>
+            <div className="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-base shadow flex-shrink-0">🌊</div>
             <div>
               <p className="text-white font-bold text-sm leading-tight">Bahari CBO</p>
               <p className="text-slate-500 text-xs">Monitoring System</p>
@@ -53,7 +53,7 @@ export default function Sidebar({ onClose }) {
           </div>
         )}
         {collapsed && (
-          <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-base">🌊</div>
+          <div className="w-8 h-8 bg-ocean-600 rounded-lg flex items-center justify-center text-base">🌊</div>
         )}
         <button
           onClick={() => { setCollapsed(!collapsed); onClose?.(); }}
@@ -105,7 +105,7 @@ export default function Sidebar({ onClose }) {
         {/* User card */}
         {!collapsed && (
           <div className="flex items-center gap-2.5 mt-2 px-2 py-2 border-t border-slate-800">
-            <div className="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+            <div className="w-8 h-8 rounded-full bg-ocean-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
               {user?.name?.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
