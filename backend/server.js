@@ -64,6 +64,7 @@ app.use('/api/readings', readingRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/iot',   require('./src/routes/iot'));
 
 // Health check
 app.get('/api/health', (req, res) => {
