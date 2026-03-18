@@ -192,18 +192,20 @@ const getAlerts = async (req, res) => {
 // @route GET /api/readings/public-stats
 const getPublicStats = async (req, res) => {
   try {
-    const Device = require('../models/Device');
-    const total  = await Device.countDocuments({ isActive: true });
-
-    // Devices that have a reading in the last 10 minutes
+    const col = mongoose.connection.db.collection('bahari_cbo');
     const tenMinsAgo = new Date(Date.now() - 10 * 60 * 1000);
-    const recentReadings = await Reading.aggregate([
-      { $match: { timestamp: { $gte: tenMinsAgo } } },
-      { $group: { _id: '$device' } },
-    ]);
-    const online  = recentReadings.length;
-    const warning = await Reading.countDocuments({ alert: true, timestamp: { $gte: tenMinsAgo } });
-    const offline = Math.max(0, total - online);
+
+    // Get latest reading per device
+    const devices = await col.aggregate([
+      { $match: { 'payload.device_id': { $exists: true } } },
+      { $sort: { 'payload.received_at': -1 } },
+      { $group: { _id: '$payload.device_id', lastSeen: { $first: '$payload.received_at' }, temp: { $first: '$payload.temperature' } } },
+    ]).toArray();
+
+    const total   = devices.length;
+    const online  = devices.filter(d => new Date(d.lastSeen) >= tenMinsAgo).length;
+    const warning = devices.filter(d => d.temp != null && (d.temp < 20 || d.temp > 32)).length;
+    const offline = total - online;
 
     res.json({ success: true, data: { total, online, warning, offline } });
   } catch (err) {
